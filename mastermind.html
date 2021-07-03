@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Giga Mastermind</title>
+</head>
+<body>
+    <p>Appuie sur F12 pour afficher la console puis sur le bouton "Play"</p>
+    <input type="button" value="Play" onclick="mastermind()"/>
+<!--<script src="mastermind.js"></script>-->   
+</body>
+<script>
+    function mastermind() {
+    // Initialisation des variables
+    var combinaison = new Array(4);
+    var guess;
+    var tGuess;
+    var nbEssais = 8;
+    var bon = 0;
+    var mal = 0;
+    var bGagne = false;
+    var bPerdu = false;
+
+    for (let i = 0; i < 4; i++) {
+        combinaison[i] = Math.round((Math.random() * 7) + 1);
+    }
+
+//console.log(combinaison);
+    do {
+        do {
+            guess = prompt("Saisir une combinaison de 4 chiffres, compris entre 1 et 8 (inclus)");
+        } while (isNaN(guess) || guess.length != 4 || guess.includes(" ") || guess.includes("0") || guess.includes("9") && !bPerdu && !bGagne);
+        
+        
+            tGuess = guess.split("").map(Number);
+
+    console.log(tGuess);
+            for (let i= 0; i < 4; i++) {
+                if (combinaison.includes(tGuess[i])) {
+                    if (combinaison[i] == tGuess[i]) {
+                        bon ++;
+                    } else {
+                        mal ++;
+                    }
+                    if (bon == 4) {
+                        bGagne = true;
+                    }
+                }
+            } 
+            nbEssais --;
+            if (nbEssais == 1) {
+                console.error("Attention, dernière chance !")
+            }
+            if (nbEssais == 0) {
+                bPerdu = true;
+            }
+        console.log("Combinaison précédente: "+tGuess+" \nBien placés: "+bon+"\nMal placés: "+mal+"\nEssais restants: "+nbEssais);
+            bon = 0;
+            mal = 0;
+    } while (!bPerdu && !bGagne)
+            
+    if (bGagne) {
+        alert("Bravo ! Vous avez gagné !");
+    }
+    if (bPerdu) {
+        alert("Game Over ! La bonne réponse était \n"+ combinaison.join(""));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+</script>
+</html>
